@@ -1,8 +1,15 @@
 <header class="container">
-  <h1>Welcome to Music Wall</h1>
+  <h1>Welcome to Music Wall, <%= session["user"] %></h1>
+
+  <% if session["user"] == "anonymous" %>
+    <a href="/songs/login" class="btn btn-primary">login</a> &nbsp &nbsp
+    <a href="/songs/new_user" class="btn btn-default btn-xs">Sign up</a>
+  <% else %>
+    <p><a href="/logout" class="btn btn-primary btn-xs">Log out</a></p>
+  <% end %>
 </header>
 
-<section class="container">
+<section class="container song_list">
 
   <a class="btn btn-primary" href="/songs/new" role="button">Add new song</a>
   
@@ -14,6 +21,9 @@
         <div>
           link : <%= song.url %>
         </div>
+        <% if song.user %>
+          Posted by: <%= song.user.username %>
+        <% end %>
       </div>
     </a>
   <% end %>

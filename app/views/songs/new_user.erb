@@ -1,0 +1,29 @@
+
+
+<header class="container">
+  <% if @error %>
+    <div class="error_message">
+      <%= @error %>
+    </div>
+  <% end %>
+
+  <h1>Create New User</h1>
+</header>
+
+<section class="container" >
+  <form method="post" action="/create_user">
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" class="form-control" placeholder="Username" name="username">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" class="form-control" placeholder="Password" name="password">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</section>
+
+<footer class="container">
+  <a href="/">Go back</a>
+</footer>
