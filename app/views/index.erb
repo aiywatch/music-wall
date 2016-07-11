@@ -1,0 +1,20 @@
+<header class="container">
+  <h1>Welcome to Music Wall</h1>
+</header>
+
+<section class="container">
+  <div>
+    <a href="/songs/new">new song</a>
+  </div>
+  
+  <% @songs.each do |song| %>
+    <div class="song">
+      Title : <%= song.title %>
+      by : <%= song.author %>
+      <div>
+        <a href="<%= song.url %>">link : <%= song.url %></a>
+      </div>
+    </div>
+  <% end %>
+
+</section>

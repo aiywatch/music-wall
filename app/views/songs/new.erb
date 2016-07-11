@@ -1,0 +1,37 @@
+
+
+<header class="container">
+  <% if @error %>
+    <div class="error_message">
+      <%= @error %>
+    </div>
+  <% end %>
+
+  <h1>Create new songs</h1>
+</header>
+
+<section class="container">
+  <form method="post" action="/index">
+    <div>
+      <label>Songs title: </label>
+      <input type="text" name="title">
+    </div>
+
+    <div>
+      <label>Author name: </label>
+      <input type="text" name="author">
+    </div>
+
+    <div>
+      <label>Link: </label>
+      <input type="text" name="url">
+    </div>
+
+    <div>
+      <input type="submit" name="Submit">
+    </div>
+    <div>
+      <a href="/index">Cancel</a>
+    </div>
+  </form>
+</section>
