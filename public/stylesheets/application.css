@@ -2,7 +2,7 @@
   margin: 0 auto;
   padding-left: 30px;
   padding-right: 30px;
-  width: 900px;
+  width: 800px;
   text-align: center;
 }
 
@@ -11,9 +11,18 @@
   display: block;
   width: 80%;
   padding: 10px;
-  margin: 10px;
+  margin: 10px auto;
+  border-radius: 50%;
+}
+
+.song:hover {
+  background-color: #ffffda;
 }
 
 .error_message {
   color: red;
+}
+
+label {
+  text-align: left;
 }

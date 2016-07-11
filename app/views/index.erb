@@ -3,18 +3,19 @@
 </header>
 
 <section class="container">
-  <div>
-    <a href="/songs/new">new song</a>
-  </div>
+
+  <a class="btn btn-primary" href="/songs/new" role="button">Add new song</a>
   
   <% @songs.each do |song| %>
-    <div class="song">
-      Title : <%= song.title %>
-      by : <%= song.author %>
-      <div>
-        <a href="<%= song.url %>">link : <%= song.url %></a>
+    <a href="<%= song.url %>" target="_blank">
+      <div class="song">
+        Title : <%= song.title %>
+        by : <%= song.author %>
+        <div>
+          link : <%= song.url %>
+        </div>
       </div>
-    </div>
+    </a>
   <% end %>
 
 </section>
