@@ -1,6 +1,6 @@
 .container {
-  margin: 0px auto;
-  margin-bottom: 30px;
+  margin: 20px auto;
+  /*margin-bottom: 30px;*/
   padding-left: 30px;
   padding-right: 30px;
   width: 800px;
@@ -36,4 +36,24 @@
 
 .stars {
   margin-right: 30px 
+}
+
+.welcome {
+  float: right;
+}
+
+.menubar {
+  widhth: 100%;
+  padding: 1em 0;
+  background-color: rgba(255, 1, 1, 0.09);
+  /*border: 1px solid black;*/
+  border-radius: 10px;
+}
+
+.nav {
+  float: left;
+}
+
+.logo {
+  color: #ea0000;
 }

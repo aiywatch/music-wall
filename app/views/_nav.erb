@@ -1,5 +1,26 @@
-<ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#">Login</a></li>
-  <li><a href="#">Signup</a></li>
-</ol>
+<h1 class="logo">%% *~Music Wall ~* %%</h1>
+
+<section class="menubar">
+
+    <% if session["user_obj"]%>
+      <% if session["user_obj"] %>
+        Welcome to Music Wall, <%= session["user_obj"].username %>! &nbsp &nbsp
+      <% end %>
+      <a href="/">Home</a> &nbsp &nbsp
+      <a href="/logout">Logout</a>
+    <% else %>
+      <a href="/">Home</a> &nbsp &nbsp
+      <a href="/songs/login">Login</a> &nbsp &nbsp
+      <a href="/songs/new_user">Signup</a>
+
+    <% end %>
+    
+    
+    
+  </ol>
+</section>
+
+
+
+
+
