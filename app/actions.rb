@@ -1,8 +1,20 @@
 # Homepage (Root path)
 enable :sessions
 
+helpers do
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+  def can_comment?
+    if session[:user_obj]
+      comment = Comment.where(song_id: params[:id], user_id: session[:user_obj].id)
+      comment.size == 0
+    end
+  end
+end
+
 get '/', '/index' do
-  session["user"] ||= "anonymous"
   @songs = Song.all
   erb :index
 end
@@ -16,7 +28,8 @@ get '/songs/new_user' do
 end
 
 get '/logout' do
-  session["user"] = nil
+  # use session.clear or clear both 
+  session.clear
   redirect '/'
 end
 
@@ -34,9 +47,19 @@ get '/vote/:id' do
   redirect '/'
 end
 
+get '/song_view/:id' do
+  @song = Song.find_by(id: params[:id])
+  erb :'songs/song_view'
+end
 
-post '/index' do
-  username_id = User.find_by(username: session["user"]).id unless session["user"] == "anonymous"
+get '/comment/del/:song_id/:id' do
+  Comment.find(params[:id]).destroy
+  redirect "/song_view/#{params[:song_id]}"
+end
+
+
+post '/new_song' do
+  username_id = session["user_obj"].id if session["user_obj"]
 
   @song = Song.new(
     title: params[:title],
@@ -47,7 +70,7 @@ post '/index' do
   if @song.save
     redirect '/'
   else
-    @error = 'Invalid field'
+    session[:flash] = 'Invalid field'
     erb :'/songs/new'
   end
 end
@@ -58,11 +81,10 @@ post '/create_user' do
     password: params[:password]
   )
   if @user.save
-    session["user"] = @user.username
     session["user_obj"] = @user
     erb :'/songs/success_user'
   else
-    @error = 'Invalid field'
+    session[:flash] = 'Invalid field'
     erb :'/songs/new_user'
   end
 end
@@ -70,12 +92,26 @@ end
 post '/loging' do
   if User.authen(params).size > 0
     user = User.authen(params)
-    session["user"] = user.first.username
     session["user_obj"] = user.first
   else
-    @error = 'Invalid User'
+    session[:flash] = 'Invalid User'
   end
   redirect '/'
+end
+
+post '/comment/new/:id' do
+  @comment = Comment.new(
+    song_id: params[:id],
+    user_id: session[:user_obj].id,
+    comment: params[:comment],
+    star: params[:star]
+  )
+  if @comment.save
+    redirect "/song_view/#{params[:id]}"
+  else
+    session[:flash] = 'Invalid Comment'
+    redirect "/song_view/#{params[:id]}"
+  end
 end
 
 

@@ -1,16 +1,17 @@
 <header class="container">
-  <h1>Welcome to Music Wall, <%= session["user"] %></h1>
-  <% if @error %>
+  <h1>Welcome to Music Wall, <%= session["user_obj"].username if session["user_obj"] %></h1>
+  <% if session[:flash] %>
     <div class="error_message">
-      <%= @error %>
+      <%= session[:flash] %>
     </div>
   <% end %>
 
-  <% if session["user"] == "anonymous" %>
+
+  <% if session["user_obj"]%>
+    <p><a href="/logout" class="btn btn-primary btn-xs">Log out</a></p>
+  <% else %>
     <a href="/songs/login" class="btn btn-primary">login</a> &nbsp &nbsp
     <a href="/songs/new_user" class="btn btn-default btn-xs">Sign up</a>
-  <% else %>
-    <p><a href="/logout" class="btn btn-primary btn-xs">Log out</a></p>
   <% end %>
 </header>
 
@@ -20,7 +21,7 @@
   
   <% @songs.each do |song| %>
     <div>
-      <a class="inline" href="<%= song.url %>" target="_blank">
+      <a class="inline" href="/song_view/<%= song.id %>" >
         <div class="song">
           <p> Upvoted : <%= song.votes.size %> </p>
           Title : <%= song.title %>
@@ -33,7 +34,7 @@
           <% end %>
         </div>
       </a>
-      <% if session["user"] != "anonymous"  %>
+      <% if session["user_obj"] %>
         <% if song.like?(session["user_obj"]) %>
           <a class="inline" href="">UNLIKE</a>
         <% else %>

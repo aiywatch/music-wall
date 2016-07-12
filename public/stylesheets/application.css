@@ -1,5 +1,6 @@
 .container {
-  margin: 20px auto;
+  margin: 0px auto;
+  margin-bottom: 30px;
   padding-left: 30px;
   padding-right: 30px;
   width: 800px;
@@ -31,4 +32,8 @@
 
 .inline {
   display: inline-block;
+}
+
+.stars {
+  margin-right: 30px 
 }

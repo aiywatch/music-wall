@@ -1,0 +1,50 @@
+
+<p> Song Title : <%= @song.title %> </p>
+<p> Author : <%= @song.author %> </p>
+<p> Link : <%= @song.url %> </p>
+
+<p> Posted by : <%= @song.user.username unless @song.user.nil? %> </p>
+
+<% if session[:user_obj] %>
+
+  <% if can_comment? %>
+    <form method="post" action="/comment/new/<%= @song.id %>">
+      <textarea class="form-control" rows="3" name="comment"></textarea>
+
+      <label>stars : </label>
+      <select name="star" class="stars">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  <% end %>
+
+  <% @song.comments.each do |comment| %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= comment.user.username %></h3>
+      </div>
+      <div class="panel-body">
+        <%= comment.star %> stars : 
+        <%= comment.comment %>
+      </div>
+      <% if comment.user_id == session[:user_obj].id %>
+        <a class="btn btn-primary btn-xs" href="/comment/del/<%= @song.id %>/<%= comment.id %>" role="button">Delete?</a>
+      <% end %>
+    </div>
+    
+  <% end %>
+
+<% else %>
+  <p>Please login</p>
+
+<% end %>
+
+<footer class="container">
+  <a href="/">Go back</a>
+</footer>

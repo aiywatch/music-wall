@@ -1,9 +1,9 @@
 
 
 <header class="container">
-  <% if @error %>
+  <% if session[:flash] %>
     <div class="error_message">
-      <%= @error %>
+      <%= session[:flash] %>
     </div>
   <% end %>
 
@@ -11,7 +11,7 @@
 </header>
 
 <section class="container">
-  <form method="post" action="/index">
+  <form method="post" action="/new_song">
     <div class="form-group">
       <label>Songs title: </label>
       <input class="form-control" type="text" name="title">
