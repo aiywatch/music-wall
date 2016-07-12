@@ -15,7 +15,7 @@ helpers do
 end
 
 get '/', '/index' do
-  @songs = Song.all
+  @songs = Song.all.sort{ |s1, s2| s2.vote_count <=> s1.vote_count }
   erb :index
 end
 
@@ -90,9 +90,9 @@ post '/create_user' do
 end
 
 post '/loging' do
-  if User.authen(params).size > 0
-    user = User.authen(params)
-    session["user_obj"] = user.first
+  user = User.authen(params)
+  if user
+    session["user_obj"] = user
   else
     session[:flash] = 'Invalid User'
   end

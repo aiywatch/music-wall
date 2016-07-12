@@ -13,4 +13,8 @@ class Song < ActiveRecord::Base
     # !votes.where(user_id: user.id).empty?
   end
 
+  def vote_count
+    votes.size
+  end
+
 end
