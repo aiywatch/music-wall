@@ -24,6 +24,17 @@ get '/songs/login' do
   erb :"/songs/login"
 end
 
+get '/vote/:id' do
+  if session["user_obj"]
+    user_id = session["user_obj"].id
+    song_id = params[:id]
+    vote = Vote.new(song_id: song_id, user_id: user_id)
+    vote.save
+  end
+  redirect '/'
+end
+
+
 post '/index' do
   username_id = User.find_by(username: session["user"]).id unless session["user"] == "anonymous"
 
@@ -48,6 +59,7 @@ post '/create_user' do
   )
   if @user.save
     session["user"] = @user.username
+    session["user_obj"] = @user
     erb :'/songs/success_user'
   else
     @error = 'Invalid field'
@@ -56,7 +68,16 @@ post '/create_user' do
 end
 
 post '/loging' do
-  user = User.authen(params)
-  session["user"] = user.first.username
+  if User.authen(params).size > 0
+    user = User.authen(params)
+    session["user"] = user.first.username
+    session["user_obj"] = user.first
+  else
+    @error = 'Invalid User'
+  end
   redirect '/'
 end
+
+
+
+

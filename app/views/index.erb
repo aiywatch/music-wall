@@ -1,5 +1,10 @@
 <header class="container">
   <h1>Welcome to Music Wall, <%= session["user"] %></h1>
+  <% if @error %>
+    <div class="error_message">
+      <%= @error %>
+    </div>
+  <% end %>
 
   <% if session["user"] == "anonymous" %>
     <a href="/songs/login" class="btn btn-primary">login</a> &nbsp &nbsp
@@ -14,18 +19,28 @@
   <a class="btn btn-primary" href="/songs/new" role="button">Add new song</a>
   
   <% @songs.each do |song| %>
-    <a href="<%= song.url %>" target="_blank">
-      <div class="song">
-        Title : <%= song.title %>
-        by : <%= song.author %>
-        <div>
-          link : <%= song.url %>
+    <div>
+      <a class="inline" href="<%= song.url %>" target="_blank">
+        <div class="song">
+          <p> Upvoted : <%= song.votes.size %> </p>
+          Title : <%= song.title %>
+          by : <%= song.author %>
+          <div>
+            link : <%= song.url %>
+          </div>
+          <% if song.user %>
+            Posted by: <%= song.user.username %>
+          <% end %>
         </div>
-        <% if song.user %>
-          Posted by: <%= song.user.username %>
+      </a>
+      <% if session["user"] != "anonymous"  %>
+        <% if song.like?(session["user_obj"]) %>
+          <a class="inline" href="">UNLIKE</a>
+        <% else %>
+          <a class="inline" href="/vote/<%= song.id %>">LIKE</a>
         <% end %>
-      </div>
-    </a>
-  <% end %>
+      <% end %>
+    <% end %>
+  </div>
 
 </section>
